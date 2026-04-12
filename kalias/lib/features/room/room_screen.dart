@@ -49,7 +49,7 @@ class RoomScreen extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          // ── Room background ──────────────────────────────────────────────
+          // ── Room background — wall ───────────────────────────────────────
           // BoxFit.cover fills the screen; 16:9 image crops symmetrically on
           // portrait. Metadata confirms centre is kept clear for gameplay.
           Positioned.fill(
@@ -60,6 +60,18 @@ class RoomScreen extends ConsumerWidget {
               errorBuilder: (_, _, _) => Container(
                 color: const Color(0xFFEDE7F6),
               ),
+            ),
+          ),
+
+          // ── Room background — floor ──────────────────────────────────────
+          // Anchored bottom-center so the baseboard lines up with the wall
+          // asset regardless of screen height. Characters sit on top.
+          Positioned.fill(
+            child: Image.asset(
+              'assets/backgrounds/bg_room_floor.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
+              errorBuilder: (_, _, _) => const SizedBox.shrink(),
             ),
           ),
 
@@ -129,7 +141,6 @@ class _KaliaSprite extends ConsumerWidget {
     return GestureDetector(
       onTap: () => _showProfileSheet(context, ref),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           // Spacer aligns Kalia's top with the mood bubbles above the cats
           const SizedBox(height: 30),

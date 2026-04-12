@@ -1,28 +1,34 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "kalias",
+            "name": "kalias (web – code-server, debug)",
+            "cwd": "kalias",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "web-server",
+            "toolArgs": [
+                "--web-port=8080",
+                "--web-hostname=0.0.0.0"
+            ]
+        },
+        {
+            "name": "kalias (web – code-server, profile)",
+            "cwd": "kalias",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "web-server",
+            "flutterMode": "profile",
+            "toolArgs": [
+                "--web-port=8080",
+                "--web-hostname=0.0.0.0"
+            ]
+        },
+        {
+            "name": "kalias (Android, debug)",
             "cwd": "kalias",
             "request": "launch",
             "type": "dart"
-        },
-        {
-            "name": "kalias (profile mode)",
-            "cwd": "kalias",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "kalias (release mode)",
-            "cwd": "kalias",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
         }
     ]
 }
