@@ -1,0 +1,252 @@
+{
+  "assetName": "Kalia_Avatar_V1",
+  "filename": "kalia_sprite.png",
+  "format": "PNG-32",
+  "colorSpace": "sRGB",
+  "alpha": {
+    "transparency": true,
+    "alphaMode": "straight",
+    "background": "transparent"
+  },
+  "frameWidth": 160,
+  "frameHeight": 180,
+  "padding": 2,
+  "totalColumns": 3,
+  "totalRows": 4,
+  "sheetWidth": 512,
+  "sheetHeight": 1024,
+  "anchorPoint": {
+    "type": "bottom_center",
+    "cellRelativeX": 80,
+    "cellRelativeY": 168
+  },
+  "animationSequences": [
+    {
+      "row": 0,
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "name": "idle_wave_cheer"
+    },
+    {
+      "row": 1,
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "name": "walk_front"
+    },
+    {
+      "row": 2,
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "name": "walk_side"
+    },
+    {
+      "row": 3,
+      "frames": [
+        0,
+        1
+      ],
+      "name": "jump"
+    }
+  ],
+  "frameRects": {
+    "r0c0": {
+      "frame": {
+        "x": 14,
+        "y": 20,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 74,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 57,
+        "y": 18
+      }
+    },
+    "r0c1": {
+      "frame": {
+        "x": 176,
+        "y": 20,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 94,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 209,
+        "y": 18
+      }
+    },
+    "r0c2": {
+      "frame": {
+        "x": 338,
+        "y": 20,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 118,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 359,
+        "y": 18
+      }
+    },
+    "r1c0": {
+      "frame": {
+        "x": 14,
+        "y": 202,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 80,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 54,
+        "y": 200
+      }
+    },
+    "r1c1": {
+      "frame": {
+        "x": 176,
+        "y": 202,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 94,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 209,
+        "y": 200
+      }
+    },
+    "r1c2": {
+      "frame": {
+        "x": 338,
+        "y": 202,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 92,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 372,
+        "y": 200
+      }
+    },
+    "r2c0": {
+      "frame": {
+        "x": 14,
+        "y": 384,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 76,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 56,
+        "y": 382
+      }
+    },
+    "r2c1": {
+      "frame": {
+        "x": 176,
+        "y": 384,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 76,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 218,
+        "y": 382
+      }
+    },
+    "r2c2": {
+      "frame": {
+        "x": 338,
+        "y": 384,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 76,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 380,
+        "y": 382
+      }
+    },
+    "r3c0": {
+      "frame": {
+        "x": 14,
+        "y": 566,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 99,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 44,
+        "y": 564
+      }
+    },
+    "r3c1": {
+      "frame": {
+        "x": 176,
+        "y": 566,
+        "w": 160,
+        "h": 180
+      },
+      "spriteSize": {
+        "w": 106,
+        "h": 170
+      },
+      "spritePos": {
+        "x": 203,
+        "y": 564
+      }
+    },
+    "r3c2": {
+      "frame": {
+        "x": 338,
+        "y": 566,
+        "w": 160,
+        "h": 180
+      },
+      "blank": true
+    }
+  },
+  "notes": [
+    "Bottom-right frame is intentionally blank.",
+    "Frames are placed on a uniform grid with 2px spacing between cells.",
+    "All visible frames were extracted from the provided source image and normalized to a common anchor line."
+  ]
+}

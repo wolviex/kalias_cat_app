@@ -11,6 +11,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(PlayerProfileAdapter());
   await Hive.openBox<PlayerProfile>('player_profile');
+  await Hive.openBox('cat_states'); // untyped box — stores hunger/energy ints + savedAt string
 
   runApp(const ProviderScope(child: KaliasApp()));
 }

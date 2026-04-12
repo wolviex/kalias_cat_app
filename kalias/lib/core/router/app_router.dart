@@ -67,7 +67,8 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.reward,
-      builder: (context, state) => const RewardScreen(),
+      builder: (context, state) =>
+          RewardScreen(xpEarned: state.extra as int? ?? 15),
     ),
   ],
   errorBuilder: (context, state) => Scaffold(

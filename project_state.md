@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: Phase 2 — First Minigame (Calming the Zoomies)
+## Current Phase: Phase 3 — Remaining Minigames & Sprite Polish
 
 **Status:** Not started
 
@@ -16,12 +16,26 @@
 | :--- | :--- | :--- |
 | **Phase 0** | Project Foundation | ✅ Complete |
 | **Phase 1** | Core Room & Cat System MVP | ✅ Complete |
-| **Phase 2** | First Minigame (Calming the Zoomies) | Not started |
+| **Phase 2** | Care Loop, Persistence & First Minigames | ✅ Complete |
 | **Phase 3** | Remaining Minigames (x3) | Not started |
 | **Phase 4** | Progression & Reward Loop | Not started |
 | **Phase 5** | Calm Corner & EQ Polish | Not started |
 | **Phase 6** | Android Release Prep | Not started |
 | **Phase 7** | One-Time Purchase (Future) | Not started |
+
+---
+
+## Phase 2 Checklist
+
+- [x] Cat state persistence — Hive `cat_states` box; retroactive decay on re-launch (8h cap)
+- [x] Feed/Play visual feedback — `AnimatedSwitcher` on mood bubble shows 🍖/⚡ for 1.5s; reaction cleared automatically
+- [x] Heart Sparks XP — +5 XP on feed and play, awarded via `PlayerProfileNotifier`
+- [x] Kalia avatar profile sheet — name, tier, total XP, trunk count, change tier in-place
+- [x] Cat state → minigame triggers — `minigameTriggered` computed on `CatState`; pulsing `!` badge on sprite; trigger banner with "Play" button in status sheet
+- [x] MG-1: Calming the Zoomies — breathing circle with DDA (2/3/4 cycles, haptic feedback); restores Noodles +40 energy; +15 Star Sparks XP
+- [x] MG-4: Loaf Cat's Snack Stack — tap-to-feed counting game; DDA (1-food Sprout / 2-food Seedling+); restores Loaf Cat +40 hunger; +15 XP
+- [x] Reward screen — accepts `xpEarned` via router `extra`; shows Purr-gress bar; no double-XP
+- [x] `flutter analyze` — no issues
 
 ---
 
@@ -113,3 +127,4 @@ kalias/
 | 2026-04-12 | Attempted Phase 0 start. Flutter SDK not found in PATH. Container reload required. |
 | 2026-04-12 | **Phase 0 complete.** Flutter 3.41.6 confirmed. Full project scaffold built: models, providers, router, all screen stubs. `flutter analyze` clean. `flutter build web` ✓. |
 | 2026-04-12 | **Phase 1 complete.** Room scene live with 4 character sprites. Cat status system with mood states and 30s decay timer. Tap-to-status bottom sheet with Feed/Play buttons. Onboarding screen (name + DDA tier). Purr-gress bar. `flutter analyze` clean. |
+| 2026-04-12 | **Phase 2 complete.** Cat state persistence (Hive + retroactive decay). Feed/Play XP (+5). Animated mood bubble reactions. Minigame trigger badges + banners. MG-1 Calming the Zoomies (breathing circle, 3 DDA tiers, haptics). MG-4 Snack Stack (tap-to-count, 2 DDA tiers). Kalia profile sheet. Reward screen with XP param. `flutter analyze` clean. |

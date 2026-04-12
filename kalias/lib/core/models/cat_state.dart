@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Brief visual reaction shown on the mood bubble after a care action.
+enum CareReaction { fed, played }
+
 /// Identifies one of the three companion cats.
 /// Kalia is the player avatar and is handled separately.
 enum CatId {
@@ -70,8 +73,7 @@ enum MoodState {
       };
 }
 
-/// In-memory status for a single cat. Not persisted between sessions in Phase 1.
-/// Phase 2+ will snapshot this to Hive on app background.
+/// Persisted + in-memory status for a single cat.
 class CatState {
   final CatId id;
 
@@ -81,10 +83,15 @@ class CatState {
   /// 0–100. Decreases over time. Play with the cat to restore.
   final int energyLevel;
 
+  /// Set briefly after a care action to drive the mood bubble reaction animation.
+  /// Cleared automatically by CatsNotifier after 1.5 seconds.
+  final CareReaction? lastReaction;
+
   const CatState({
     required this.id,
     this.hungerLevel = 80,
     this.energyLevel = 80,
+    this.lastReaction,
   });
 
   /// Mood is computed — never stored — so it always reflects the current state.
@@ -101,9 +108,27 @@ class CatState {
     return MoodState.overloaded;
   }
 
-  CatState copyWith({int? hungerLevel, int? energyLevel}) => CatState(
+  /// Whether this cat's current mood should trigger a minigame.
+  bool get minigameTriggered => switch (id) {
+        CatId.noodles => moodState == MoodState.zoomies,
+        CatId.loafCat => moodState == MoodState.grumpy ||
+            moodState == MoodState.sad ||
+            moodState == MoodState.overloaded,
+        CatId.robotCat => moodState == MoodState.grumpy ||
+            moodState == MoodState.sad ||
+            moodState == MoodState.overloaded,
+      };
+
+  CatState copyWith({
+    int? hungerLevel,
+    int? energyLevel,
+    CareReaction? lastReaction,
+    bool clearReaction = false,
+  }) =>
+      CatState(
         id: id,
         hungerLevel: hungerLevel ?? this.hungerLevel,
         energyLevel: energyLevel ?? this.energyLevel,
+        lastReaction: clearReaction ? null : (lastReaction ?? this.lastReaction),
       );
 }
