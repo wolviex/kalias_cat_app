@@ -126,6 +126,7 @@ class _SpriteSheetAnimatorState extends State<SpriteSheetAnimator> {
         image: _image!,
         srcRect: widget.frames[_frameIndex],
       ),
+      child: const SizedBox.expand(),
     );
   }
 }
