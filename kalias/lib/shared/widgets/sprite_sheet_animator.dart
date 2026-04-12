@@ -141,10 +141,24 @@ class _SpritePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final srcAspect = srcRect.width / srcRect.height;
+    final dstAspect = size.width / size.height;
+
+    final Rect dst;
+    if (srcAspect > dstAspect) {
+      // Source is wider — fit to width, centre vertically
+      final h = size.width / srcAspect;
+      dst = Rect.fromLTWH(0, (size.height - h) / 2, size.width, h);
+    } else {
+      // Source is taller — fit to height, centre horizontally
+      final w = size.height * srcAspect;
+      dst = Rect.fromLTWH((size.width - w) / 2, 0, w, size.height);
+    }
+
     canvas.drawImageRect(
       image,
       srcRect,
-      Rect.fromLTWH(0, 0, size.width, size.height),
+      dst,
       Paint()..filterQuality = FilterQuality.medium,
     );
   }

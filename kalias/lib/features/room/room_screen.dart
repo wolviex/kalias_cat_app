@@ -145,19 +145,23 @@ class _KaliaSprite extends ConsumerWidget {
           // Spacer aligns Kalia's top with the mood bubbles above the cats
           const SizedBox(height: 30),
           Expanded(
-            child: SpriteSheetAnimator(
-              assetPath: KaliaSprites.assetPath,
-              frames: KaliaSprites.idleWaveCheer,
-              frameDuration: const Duration(milliseconds: 250),
-              fallback: Container(
-                decoration: BoxDecoration(
-                  color: Colors.amber.shade50,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Center(
-                  child: Text('🧒\nKalia',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: Colors.black54)),
+            child: FractionallySizedBox(
+              heightFactor: 0.7,
+              alignment: Alignment.bottomCenter,
+              child: SpriteSheetAnimator(
+                assetPath: KaliaSprites.assetPath,
+                frames: KaliaSprites.idleWaveCheer,
+                frameDuration: const Duration(milliseconds: 250),
+                fallback: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.amber.shade50,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Center(
+                    child: Text('🧒\nKalia',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14, color: Colors.black54)),
+                  ),
                 ),
               ),
             ),

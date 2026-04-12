@@ -42,6 +42,38 @@
 
 ---
 
+## 3a. Development Environment
+
+Development runs inside a **remote container** accessed via [code-server](https://github.com/coder/code-server) (VS Code in the browser), hosted at `*.code.home.manifold.rocks`.
+
+### Port Forwarding
+
+Flutter web is served on a fixed port and accessed via the manifold.rocks reverse proxy:
+
+| Setting | Value |
+| :--- | :--- |
+| Flutter web port | `8080` |
+| Accessible URL | `https://8080.code.home.manifold.rocks/` |
+| Bind address | `0.0.0.0` (required for the proxy to reach it) |
+
+These are passed to `flutter run` via `toolArgs` (not `args`) in `.vscode/launch.json`. Using `args` sends them to the Dart app instead of the Flutter tool, causing Flutter to bind to a random port.
+
+### Debug Session Limitation
+
+The manifold.rocks proxy **blocks WebSocket connections**, which breaks the DWDS debug channel (`$dwdsSseHandler`). This means:
+
+- Hot reload (`r`) and hot restart (`R`) in the terminal **do not work**
+- The VS Code widget inspector is unavailable
+- The Dart extension will report "debug session not ready" if launched with F5
+
+**Workaround:** Always launch with **Ctrl+F5** ("Run Without Debugging"), or select the `kalias (web – code-server, no-debug)` launch config. The app loads and runs correctly; browser refresh replaces hot reload.
+
+### Flutter Installation
+
+Flutter is installed via `/custom-cont-init.d/50-install-flutter.sh` (clones the Flutter git repo to `$HOME/flutter`, adds it to PATH). This runs on container start. If Flutter is not found, reload the container.
+
+---
+
 ## 4. Art & Asset Pipeline
 
 - All character and environment art is **generated via AI image tools** and iterated upon by the producer.

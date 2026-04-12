@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // PRIMARY: Standard day-to-day web config.
+            // Requires code-server to auto-forward the DDS port (the 3rd port
+            // that appears alongside :8080 and :9100). This happens automatically
+            // when the Dart extension manages the launch.
+            // If the app hangs on a blue loading bar: the DDS port wasn't
+            // forwarded. Fix: reload the extension host (Ctrl+Shift+P →
+            // "Developer: Restart Extension Host"), then relaunch.
+            // If content looks stale after a rebuild: DevTools → Application
+            // → Storage → Clear site data, then reload.
             "name": "kalias (web – code-server, debug)",
             "cwd": "kalias",
             "request": "launch",
@@ -13,6 +22,10 @@
             ]
         },
         {
+            // FALLBACK: Use if the DDS port is not being forwarded and the
+            // debug config hangs. No --start-paused, no client.js injection,
+            // no hot reload. Clear site data in DevTools before using if
+            // a previous debug build is cached in the service worker.
             "name": "kalias (web – code-server, profile)",
             "cwd": "kalias",
             "request": "launch",
