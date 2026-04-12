@@ -1,0 +1,1 @@
+This document outlines the development spec, including phases, benchmarks, frameworks and any other design choices. Any planning work MUST be documented here.

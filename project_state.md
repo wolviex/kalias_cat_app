@@ -1,0 +1,1 @@
+This document tracks the current state of development including identifying completed phases or steps, and not yet completed phases. Intentional usage of this file is mandatory to allow consistency between conversations.
