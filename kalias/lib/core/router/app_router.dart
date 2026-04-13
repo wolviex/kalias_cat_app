@@ -9,6 +9,7 @@ import '../../features/minigames/breathing/breathing_screen.dart';
 import '../../features/minigames/eq_sort/eq_sort_screen.dart';
 import '../../features/minigames/reading/reading_screen.dart';
 import '../../features/minigames/math/math_screen.dart';
+import '../../features/minigames/logic_loop/logic_loop_screen.dart';
 import '../../features/reward/reward_screen.dart';
 import '../models/player_profile.dart';
 
@@ -20,6 +21,7 @@ abstract final class AppRoutes {
   static const eqSort = '/minigame/eq-sort';
   static const reading = '/minigame/reading';
   static const math = '/minigame/math';
+  static const logicLoop = '/minigame/logic-loop';
   static const reward = '/reward';
 }
 
@@ -64,6 +66,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.math,
       builder: (context, state) => const MathScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.logicLoop,
+      builder: (context, state) => const LogicLoopScreen(),
     ),
     GoRoute(
       path: AppRoutes.reward,

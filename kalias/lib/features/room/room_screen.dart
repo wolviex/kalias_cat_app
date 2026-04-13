@@ -402,7 +402,8 @@ class _GamesMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final games = [
       (emoji: '🫧', label: 'Calming the Zoomies',      route: AppRoutes.breathing),
-      (emoji: '😊', label: "Robot Cat's Logic Loop",    route: AppRoutes.eqSort),
+      (emoji: '😊', label: "Robot Cat's Feelings Sort", route: AppRoutes.eqSort),
+      (emoji: '🤖', label: "Robot Cat's Logic Loop",    route: AppRoutes.logicLoop),
       (emoji: '📖', label: "Noodles' Laser Letters",    route: AppRoutes.reading),
       (emoji: '🔢', label: "Loaf Cat's Snack Stack",    route: AppRoutes.math),
     ];
