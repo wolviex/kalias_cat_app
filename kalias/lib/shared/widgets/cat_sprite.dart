@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/models/cat_state.dart';
+import '../../core/models/noodles_sprites.dart';
 import '../../core/providers/cats_provider.dart';
 import '../../core/providers/player_profile_provider.dart';
 import '../../core/router/app_router.dart';
+import 'sprite_sheet_animator.dart';
 
 /// XP awarded for a single care action (feed or play).
 const _careXp = 5;
@@ -29,13 +31,7 @@ class CatSprite extends ConsumerWidget {
             children: [
               _AnimatedMoodBubble(cat: cat),
               const SizedBox(height: 4),
-              Expanded(
-                child: Image.asset(
-                  catId.assetPath,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => _PlaceholderSprite(catId: catId),
-                ),
-              ),
+              Expanded(child: _buildSprite(cat)),
               Text(
                 catId.displayName,
                 style: const TextStyle(
@@ -55,6 +51,32 @@ class CatSprite extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSprite(CatState cat) {
+    if (catId == CatId.noodles) {
+      final frames = switch (cat.moodState) {
+        MoodState.zoomies                      => NoodlesSprites.run,
+        MoodState.happy || MoodState.neutral   => NoodlesSprites.standDance,
+        _                                      => NoodlesSprites.idleSleep,
+      };
+      final fps = switch (cat.moodState) {
+        MoodState.zoomies => const Duration(milliseconds: 120),
+        MoodState.happy || MoodState.neutral => const Duration(milliseconds: 180),
+        _ => const Duration(milliseconds: 280),
+      };
+      return SpriteSheetAnimator(
+        assetPath: NoodlesSprites.assetPath,
+        frames: frames,
+        frameDuration: fps,
+        fallback: _PlaceholderSprite(catId: catId),
+      );
+    }
+    return Image.asset(
+      catId.assetPath,
+      fit: BoxFit.contain,
+      errorBuilder: (_, _, _) => _PlaceholderSprite(catId: catId),
     );
   }
 
