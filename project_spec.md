@@ -291,11 +291,13 @@ When a trigger fires, the room shows a visual prompt ("Noodles needs help calmin
 - [x] Equipped items rendered as emoji badge overlays on characters in room
 - [x] Milestone item catalog implemented: 8 Kalia Gear + 8 Cat Costumes + 5 Toys across bonding tiers
 
-### Phase 5 — Calm Corner & EQ Polish
-- [ ] Calm Corner room/overlay (accessible any time, not gated)
-- [ ] Feelings Check-In mechanic (Mood Mirror)
-- [ ] Sensory play widgets (kinetic sand / pop-its)
-- [ ] Full audio layer (BGM per room, SFX per interaction, lo-fi music only)
+### Phase 5 — Calm Corner & EQ Polish ✅
+- [x] Calm Corner screen (`/calm-corner`) — always accessible from room; dark minimal theme; hub with 3 activity tiles; switches calm BGM on entry
+- [x] Feelings Check-In — Mood Mirror screen (`/mood-mirror`): 6 feeling cards, affirming message per feeling, "Let's breathe together" CTA for difficult emotions
+- [x] Sensory play widgets — Pop-Its (5×6 bubble grid, pop animation, auto-reset on clear); Kinetic Sand (touch-draw canvas with 6-colour palette + clear)
+- [x] Free breathing activity inside Calm Corner (4-cycle, no DDA, no XP — pure calming tool)
+- [x] Audio service (`AudioService` + `audioServiceProvider`) — flame_audio wrapper; BGM + SFX hooks at all key integration points; mute toggle in room + calm corner AppBar; all calls guarded (no crash on missing files)
+- [ ] Actual audio files — BGM (`music/room_bgm.mp3`, `music/calm_bgm.mp3`) + SFX (`sfx/feed.mp3`, `sfx/play.mp3`, `sfx/pop.mp3`, `sfx/success.mp3`, `sfx/trunk_open.mp3`, `sfx/breathe_in.mp3`, `sfx/breathe_out.mp3`) pending from content team
 
 ### Phase 6 — Android Release Prep
 - [ ] COPPA compliance audit (no third-party data collection, no ads)

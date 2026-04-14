@@ -4,9 +4,9 @@
 
 ---
 
-## Current Phase: Phase 5 — Calm Corner & EQ Polish
+## Current Phase: Phase 6 — Android Release Prep
 
-**Status:** Not started (Phase 3 and 4 complete)
+**Status:** Not started (Phases 3, 4, 5 complete)
 
 ---
 
@@ -19,9 +19,25 @@
 | **Phase 2** | Care Loop, Persistence & First Minigames | ✅ Complete |
 | **Phase 3** | Remaining Minigames (x3) | ✅ Complete |
 | **Phase 4** | Progression & Reward Loop | ✅ Complete |
-| **Phase 5** | Calm Corner & EQ Polish | Not started |
+| **Phase 5** | Calm Corner & EQ Polish | ✅ Complete |
 | **Phase 6** | Android Release Prep | Not started |
 | **Phase 7** | One-Time Purchase (Future) | Not started |
+
+---
+
+## Phase 5 Checklist
+
+- [x] Calm Corner screen (`lib/features/calm_corner/calm_corner_screen.dart`) — dark indigo theme; always accessible from room AppBar (🧘 icon); 3 activity hub tiles + Mood Mirror link; switches to calm BGM on entry, restores room BGM on exit
+- [x] Free breathing activity — 4-cycle no-DDA version embedded in Calm Corner; expanding circle animation; tap to start/restart
+- [x] Pop-Its — 5×6 bubble grid in Calm Corner; each bubble pops with scale animation; all-clear celebration + auto-reset; plays `sfx/pop.mp3` hook
+- [x] Kinetic Sand — touch/drag CustomPainter canvas; 6-colour palette; scatter dots with blur; clear button
+- [x] Mood Mirror screen (`lib/features/calm_corner/mood_mirror_screen.dart`) — 6 feeling cards (Happy/Calm/Sad/Angry/Worried/Tired); per-feeling affirming text; "Let's breathe together" CTA for difficult emotions; fade-in animation
+- [x] AudioService (`lib/core/services/audio_service.dart`) — `ChangeNotifierProvider`; `playBgm()`, `stopBgm()`, `playSfx()`, `toggleMute()`; all calls try/catch guarded
+- [x] Audio hooks placed at: room BGM (infrastructure ready), calm BGM on entry/exit, pop SFX in Pop-Its
+- [x] Mute toggle button in room AppBar and Calm Corner AppBar
+- [x] Routes `/calm-corner` and `/mood-mirror` added to router
+- [x] `flutter analyze` — no issues
+- [ ] Audio files pending from content team (see spec §Phase 5 for full list)
 
 ---
 
@@ -130,7 +146,12 @@ kalias/
 │   │   │   └── logic_loop/logic_loop_screen.dart   # MG-5: Logic Loop ✅
 │   │   ├── reward/reward_screen.dart          # XP celebration + trunk CTA if pendingTrunks > 0
 │   │   ├── trunk/trunk_screen.dart            # Trunk opening: bounce → 3 cards → reveal
-│   │   └── closet/closet_screen.dart          # Inventory grid; equip/unequip by slot
+│   │   ├── closet/closet_screen.dart          # Inventory grid; equip/unequip by slot
+│   │   └── calm_corner/
+│   │       ├── calm_corner_screen.dart        # Hub + breathe/pop-its/sand activities inline
+│   │       └── mood_mirror_screen.dart        # 6 feeling cards + affirming messages
+│   ├── core/services/
+│   │   └── audio_service.dart                 # AudioService + provider; BGM/SFX hooks
 │   └── shared/widgets/
 │       ├── cat_sprite.dart                    # Tappable sprite + mood bubble + status sheet
 │       ├── purr_progress_bar.dart             # XP bar at room bottom
@@ -166,3 +187,4 @@ kalias/
 | 2026-04-12 | **Phase 2 complete.** Cat state persistence (Hive + retroactive decay). Feed/Play XP (+5). Animated mood bubble reactions. Minigame trigger badges + banners. MG-1 Calming the Zoomies (breathing circle, 3 DDA tiers, haptics). MG-4 Snack Stack (tap-to-count, 2 DDA tiers). Kalia profile sheet. Reward screen with XP param. `flutter analyze` clean. |
 | 2026-04-13 | **Phase 3 complete.** Room redesigned to Stack/Positioned layout. Yarn corner item with pulse glow. Noodles sprite sheet (384×307 frames, mood-driven anim). SpriteSheetAnimator BoxFit.contain fix. MG-2 Feelings Sort (drag-and-drop, 3 DDA tiers). MG-5 Robot Cat's Logic Loop (sequence puzzle, shape + command tiles). Dev env documented (profile mode workaround, NPM WebSocket headers). `flutter analyze` clean. |
 | 2026-04-14 | **Phase 4 complete.** RewardCatalog (21 items, 3 categories). PlayerProfile extended (pendingTrunks, inventory, equipped — fields 8–10, adapter regenerated). Trunk screen (bounce → card pick → reveal). Reward screen trunk CTA. Closet screen (equip/unequip grid). Trunk + closet routes. Room: trunk item, closet AppBar button, equipped emoji badge overlays on all characters. `flutter analyze` clean. |
+| 2026-04-14 | **Phase 5 complete.** Calm Corner screen (hub → breathe/pop-its/sand activities). Free breathing (4-cycle, no XP). Pop-Its (5×6 grid, pop animation, auto-reset). Kinetic Sand (touch-draw canvas, 6-colour palette). Mood Mirror screen (6 feelings, affirming messages, breathe CTA). AudioService (flame_audio wrapper, BGM+SFX hooks, mute toggle, try/catch guarded). Routes `/calm-corner` + `/mood-mirror`. Room AppBar: mute + calm corner buttons. `flutter analyze` clean. |

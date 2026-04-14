@@ -12,6 +12,8 @@ import '../../features/minigames/math/math_screen.dart';
 import '../../features/minigames/logic_loop/logic_loop_screen.dart';
 import '../../features/trunk/trunk_screen.dart';
 import '../../features/closet/closet_screen.dart';
+import '../../features/calm_corner/calm_corner_screen.dart';
+import '../../features/calm_corner/mood_mirror_screen.dart';
 import '../../features/reward/reward_screen.dart';
 import '../models/player_profile.dart';
 
@@ -26,6 +28,8 @@ abstract final class AppRoutes {
   static const logicLoop = '/minigame/logic-loop';
   static const trunk = '/trunk';
   static const closet = '/closet';
+  static const calmCorner = '/calm-corner';
+  static const moodMirror = '/mood-mirror';
   static const reward = '/reward';
 }
 
@@ -82,6 +86,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.closet,
       builder: (context, state) => const ClosetScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.calmCorner,
+      builder: (context, state) => const CalmCornerScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.moodMirror,
+      builder: (context, state) => const MoodMirrorScreen(),
     ),
     GoRoute(
       path: AppRoutes.reward,

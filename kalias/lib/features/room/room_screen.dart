@@ -10,6 +10,7 @@ import '../../core/models/kalia_sprites.dart';
 import '../../core/models/player_profile.dart';
 import '../../core/providers/player_profile_provider.dart';
 import '../../core/router/app_router.dart';
+import '../../core/services/audio_service.dart';
 import '../../shared/widgets/cat_sprite.dart';
 import '../../shared/widgets/purr_progress_bar.dart';
 import '../../shared/widgets/sprite_sheet_animator.dart';
@@ -45,11 +46,31 @@ class RoomScreen extends ConsumerWidget {
           ),
         ),
         actions: [
+          // Mute toggle
+          Consumer(builder: (context, ref, _) {
+            final audio = ref.watch(audioServiceProvider);
+            return IconButton(
+              icon: Icon(
+                audio.isMuted ? Icons.volume_off : Icons.volume_up,
+                color: Colors.white70,
+              ),
+              tooltip: audio.isMuted ? 'Unmute' : 'Mute',
+              onPressed: audio.toggleMute,
+            );
+          }),
+          // Calm Corner
+          IconButton(
+            icon: const Icon(Icons.self_improvement, color: Colors.white),
+            tooltip: 'Calm Corner',
+            onPressed: () => context.go(AppRoutes.calmCorner),
+          ),
+          // Magic Closet
           IconButton(
             icon: const Icon(Icons.checkroom_outlined, color: Colors.white),
             tooltip: 'Magic Closet',
             onPressed: () => context.go(AppRoutes.closet),
           ),
+          // Dev games menu
           IconButton(
             icon: const Icon(Icons.sports_esports_outlined, color: Colors.white),
             tooltip: 'Games (dev)',
