@@ -25,13 +25,16 @@ class PlayerProfileAdapter extends TypeAdapter<PlayerProfile> {
       cycleXp: fields[5] == null ? 0 : (fields[5] as num).toInt(),
       trunkOpenCount: fields[6] == null ? 0 : (fields[6] as num).toInt(),
       lastPlayedAt: fields[7] as String?,
+      pendingTrunks: fields[8] == null ? 0 : (fields[8] as num).toInt(),
+      inventory: (fields[9] as List?)?.cast<String>(),
+      equipped: (fields[10] as Map?)?.cast<String, String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PlayerProfile obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +50,13 @@ class PlayerProfileAdapter extends TypeAdapter<PlayerProfile> {
       ..writeByte(6)
       ..write(obj.trunkOpenCount)
       ..writeByte(7)
-      ..write(obj.lastPlayedAt);
+      ..write(obj.lastPlayedAt)
+      ..writeByte(8)
+      ..write(obj.pendingTrunks)
+      ..writeByte(9)
+      ..write(obj.inventory)
+      ..writeByte(10)
+      ..write(obj.equipped);
   }
 
   @override

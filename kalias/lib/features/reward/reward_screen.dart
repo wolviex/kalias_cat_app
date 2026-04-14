@@ -99,6 +99,13 @@ class RewardScreen extends ConsumerWidget {
 
             const SizedBox(height: 32),
 
+            // ── Trunk CTA (when a cycle just completed) ───────────────
+            if (profile.pendingTrunks > 0)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                child: _TrunkBanner(onTap: () => context.go(AppRoutes.trunk)),
+              ),
+
             // ── Back button ───────────────────────────────────────────
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -114,6 +121,62 @@ class RewardScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Trunk banner ──────────────────────────────────────────────────────────────
+
+class _TrunkBanner extends StatelessWidget {
+  const _TrunkBanner({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.purple.shade400, Colors.purple.shade700],
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.purple.withAlpha(80),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Text('🧳', style: TextStyle(fontSize: 40)),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Trunk Unlocked!',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Tap to open and claim your reward',
+                    style: TextStyle(fontSize: 13, color: Colors.white70),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
           ],
         ),
       ),

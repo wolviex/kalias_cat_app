@@ -59,4 +59,27 @@ class PlayerProfileNotifier extends Notifier<PlayerProfile> {
     state.name = name;
     await save();
   }
+
+  /// Award [itemId] to inventory and decrement pending trunks.
+  /// [itemId] may already be owned (duplicates allowed — cosmetic extras are
+  /// kept as a future "gift to friend" mechanic).
+  Future<void> openTrunk(String itemId) async {
+    state.inventory = [...state.inventory, itemId];
+    if (state.pendingTrunks > 0) state.pendingTrunks--;
+    state.trunkOpenCount++;
+    await save();
+  }
+
+  /// Equip [itemId] to its slot (unequips whatever was there before).
+  /// Passing an empty [itemId] clears the slot.
+  Future<void> equip(String slot, String itemId) async {
+    final next = Map<String, String>.from(state.equipped);
+    if (itemId.isEmpty) {
+      next.remove(slot);
+    } else {
+      next[slot] = itemId;
+    }
+    state.equipped = next;
+    await save();
+  }
 }

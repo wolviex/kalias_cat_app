@@ -39,6 +39,18 @@ class PlayerProfile extends HiveObject {
   @HiveField(7)
   String? lastPlayedAt;
 
+  /// Trunks earned (cycle completed) but not yet opened by the player.
+  @HiveField(8)
+  int pendingTrunks;
+
+  /// IDs of all reward items the player owns.
+  @HiveField(9)
+  List<String> inventory;
+
+  /// Slot key → reward item ID for currently equipped items.
+  @HiveField(10)
+  Map<String, String> equipped;
+
   PlayerProfile({
     required this.id,
     required this.name,
@@ -48,7 +60,11 @@ class PlayerProfile extends HiveObject {
     this.cycleXp = 0,
     this.trunkOpenCount = 0,
     this.lastPlayedAt,
-  });
+    this.pendingTrunks = 0,
+    List<String>? inventory,
+    Map<String, String>? equipped,
+  })  : inventory = inventory ?? [],
+        equipped  = equipped  ?? {};
 
   DifficultyTier get difficultyTier =>
       DifficultyTierX.fromIndex(difficultyIndex);
@@ -58,7 +74,8 @@ class PlayerProfile extends HiveObject {
   /// XP required to complete a Purr-gress cycle (fill the bar).
   static const int xpPerCycle = 100;
 
-  /// Add [amount] XP and return how many cycles were completed.
+  /// Add [amount] XP, queue any completed cycles as pending trunks,
+  /// and return how many cycles were completed.
   int addXp(int amount) {
     totalXp += amount;
     cycleXp += amount;
@@ -67,6 +84,7 @@ class PlayerProfile extends HiveObject {
       cycleXp -= xpPerCycle;
       cycles++;
     }
+    pendingTrunks += cycles;
     return cycles;
   }
 

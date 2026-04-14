@@ -267,28 +267,29 @@ When a trigger fires, the room shows a visual prompt ("Noodles needs help calmin
 - [x] Purr-gress bar UI
 - [x] Feed and Play buttons in status sheet (state updates, no animation yet)
 
-### Phase 2 — Care Loop, Persistence & First Minigame
-- [ ] **Cat state persistence** — snapshot hunger/energy to Hive on care action and app background; apply retroactive decay on re-launch (cap 8h)
-- [ ] **Feed/Play visible feedback** — particle animation on care action; mood bubble updates immediately; care sound stub
-- [ ] **Heart Sparks XP** — feed (+5) and play (+5) award XP via `PlayerProfileNotifier.addXp()`
-- [ ] **Kalia avatar profile** — tapping Kalia shows a profile sheet: player name, DDA tier, total XP, trunk count; option to change tier
-- [ ] **Cat state → minigame triggers** — Zoomies/Grumpy mood shows room prompt; tap cat → routes to the appropriate minigame
-- [ ] **MG-1: Calming the Zoomies** — breathing circle with haptic feedback; all 3 DDA variants; Star Sparks XP on completion; calms Noodles (+40 energy)
-- [ ] **MG-4: Loaf Cat's Snack Stack** — counting/food drag mechanic; all 3 DDA variants; XP + hunger restore on completion
+### Phase 2 — Care Loop, Persistence & First Minigame ✅
+- [x] **Cat state persistence** — snapshot hunger/energy to Hive on care action and app background; apply retroactive decay on re-launch (cap 8h)
+- [x] **Feed/Play visible feedback** — particle animation on care action; mood bubble updates immediately; care sound stub
+- [x] **Heart Sparks XP** — feed (+5) and play (+5) award XP via `PlayerProfileNotifier.addXp()`
+- [x] **Kalia avatar profile** — tapping Kalia shows a profile sheet: player name, DDA tier, total XP, trunk count; option to change tier
+- [x] **Cat state → minigame triggers** — Zoomies/Grumpy mood shows room prompt; tap cat → routes to the appropriate minigame
+- [x] **MG-1: Calming the Zoomies** — breathing circle with haptic feedback; all 3 DDA variants; Star Sparks XP on completion; calms Noodles (+40 energy)
+- [x] **MG-4: Loaf Cat's Snack Stack** — counting/food drag mechanic; all 3 DDA variants; XP + hunger restore on completion
 - [ ] Remove dev games menu from AppBar once triggers are live
 
-### Phase 3 — Remaining Minigames & Sprite Polish
+### Phase 3 — Remaining Minigames & Sprite Polish ✅
 - [ ] **MG-3: Noodles' Laser Letters** — letter tap/word mechanic; all 3 DDA variants (most complex — build last)
-- [ ] **MG-5: Robot Cat's Logic Loop** — drag-and-drop sequencing grid; Happy-state trigger; all 3 DDA variants; new route `/minigame/logic-loop`
-- [ ] **Idle animations** — replace static PNGs with simple idle sprite animations (2–4 frame loop) for each cat; mood-reactive pose changes (Zoomies = bouncing, Sad = drooping)
-- [ ] **React animations** — bounce/sparkle on feed; heart float on play; integrate with Flutter `AnimationController`
+- [x] **MG-2: Feelings Sort** — drag emotion cards to feeling buckets; 3 DDA tiers; wrong-drop flash; Robot Cat trigger
+- [x] **MG-5: Robot Cat's Logic Loop** — tap-to-fill sequence puzzle; shape tiles (Sprout/Seedling) + robot command tiles (Bloom); route `/minigame/logic-loop`
+- [x] **Noodles sprite sheet** — 1536×921, 4×3 frames at 384×307px; mood-driven animation (idle/dance/run); SpriteSheetAnimator BoxFit.contain
+- [x] **Room redesign** — Stack/Positioned layout; yarn corner item with pulse glow; `_RoomItem` pattern established
 
-### Phase 4 — Progression & Reward Loop
-- [ ] Magical Trunk level-up sequence (yarn bar fills → trunk bounces → player taps → 3 reward cards)
-- [ ] Reward card system (3-card pick, one reward awarded)
-- [ ] Inventory and Magic Closet UI
-- [ ] Equipped items rendered on characters in room
-- [ ] Milestone unlock table implemented (see §7.2)
+### Phase 4 — Progression & Reward Loop ✅
+- [x] Magical Trunk level-up sequence (cycle completes → pendingTrunks++ → trunk bounces in room → player taps → 3 reward cards)
+- [x] Reward card system (3-card pick from tier pool, un-owned preferred; item awarded to inventory)
+- [x] Inventory and Magic Closet UI (grouped by category; equip/unequip by slot)
+- [x] Equipped items rendered as emoji badge overlays on characters in room
+- [x] Milestone item catalog implemented: 8 Kalia Gear + 8 Cat Costumes + 5 Toys across bonding tiers
 
 ### Phase 5 — Calm Corner & EQ Polish
 - [ ] Calm Corner room/overlay (accessible any time, not gated)

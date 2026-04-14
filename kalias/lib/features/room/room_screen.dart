@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/models/cat_state.dart';
 import '../../core/models/difficulty_tier.dart';
+import '../../core/models/reward_item.dart';
 import '../../core/providers/cats_provider.dart';
 import '../../core/models/kalia_sprites.dart';
 import '../../core/models/player_profile.dart';
@@ -44,6 +45,11 @@ class RoomScreen extends ConsumerWidget {
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.checkroom_outlined, color: Colors.white),
+            tooltip: 'Magic Closet',
+            onPressed: () => context.go(AppRoutes.closet),
+          ),
           IconButton(
             icon: const Icon(Icons.sports_esports_outlined, color: Colors.white),
             tooltip: 'Games (dev)',
@@ -114,7 +120,11 @@ class RoomScreen extends ConsumerWidget {
                 bottom: _purrBarH + 16,
                 width: noodlesW,
                 height: noodlesW * 1.35,
-                child: CatSprite(catId: CatId.noodles),
+                child: _CharacterWithBadge(
+                  hatEmoji: _equippedEmoji(profile, RewardSlots.noodlesHat),
+                  accEmoji: _equippedEmoji(profile, RewardSlots.noodlesAcc),
+                  child: CatSprite(catId: CatId.noodles),
+                ),
               ),
 
               // ── Loaf Cat — center-left, on the rug ──────────────────────
@@ -123,7 +133,11 @@ class RoomScreen extends ConsumerWidget {
                 bottom: _purrBarH + 4,
                 width: loafW,
                 height: loafW * 1.35,
-                child: CatSprite(catId: CatId.loafCat),
+                child: _CharacterWithBadge(
+                  hatEmoji: _equippedEmoji(profile, RewardSlots.loafHat),
+                  accEmoji: _equippedEmoji(profile, RewardSlots.loafAcc),
+                  child: CatSprite(catId: CatId.loafCat),
+                ),
               ),
 
               // ── Kalia — center, protagonist ──────────────────────────────
@@ -132,7 +146,11 @@ class RoomScreen extends ConsumerWidget {
                 bottom: _purrBarH,
                 width: kaliaW,
                 height: kaliaW * 1.4,
-                child: _KaliaSprite(name: profile.name),
+                child: _CharacterWithBadge(
+                  hatEmoji: _equippedEmoji(profile, RewardSlots.kaliaHat),
+                  accEmoji: _equippedEmoji(profile, RewardSlots.kaliaAccessory),
+                  child: _KaliaSprite(name: profile.name),
+                ),
               ),
 
               // ── Robot Cat — right side, slightly raised (depth) ──────────
@@ -141,7 +159,32 @@ class RoomScreen extends ConsumerWidget {
                 bottom: _purrBarH + 10,
                 width: robotW,
                 height: robotW * 1.35,
-                child: CatSprite(catId: CatId.robotCat),
+                child: _CharacterWithBadge(
+                  hatEmoji: null,
+                  accEmoji: _equippedEmoji(profile, RewardSlots.robotAcc),
+                  child: CatSprite(catId: CatId.robotCat),
+                ),
+              ),
+
+              // ── Magical Trunk — right side, pulses when pending ──────────
+              Positioned(
+                right: 0,
+                bottom: _purrBarH,
+                width: w * 0.22,
+                height: w * 0.22,
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final pending =
+                        ref.watch(playerProfileProvider).pendingTrunks;
+                    return _RoomItem(
+                      assetPath: 'assets/backgrounds/item_magical_trunk.png',
+                      isActive: pending > 0,
+                      onTap: pending > 0
+                          ? () => context.go(AppRoutes.trunk)
+                          : null,
+                    );
+                  },
+                ),
               ),
 
               // ── Purr-gress bar ───────────────────────────────────────────
@@ -329,6 +372,75 @@ class _ProfileStat extends StatelessWidget {
 // Shows a pulsing glow when [isActive] (cat's minigame trigger is true).
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Helper: look up emoji for an equipped slot ────────────────────────────────
+
+String? _equippedEmoji(PlayerProfile profile, String slot) {
+  final id = profile.equipped[slot];
+  if (id == null) return null;
+  return RewardCatalog.byId(id)?.emoji;
+}
+
+// ── Character with equipped badge overlays ────────────────────────────────────
+
+class _CharacterWithBadge extends StatelessWidget {
+  const _CharacterWithBadge({
+    required this.child,
+    required this.hatEmoji,
+    required this.accEmoji,
+  });
+  final Widget child;
+  final String? hatEmoji;
+  final String? accEmoji;
+
+  @override
+  Widget build(BuildContext context) {
+    if (hatEmoji == null && accEmoji == null) return child;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        child,
+        if (hatEmoji != null)
+          Positioned(
+            top: -2,
+            right: 0,
+            child: _BadgeChip(emoji: hatEmoji!),
+          ),
+        if (accEmoji != null)
+          Positioned(
+            bottom: 20,
+            right: 0,
+            child: _BadgeChip(emoji: accEmoji!),
+          ),
+      ],
+    );
+  }
+}
+
+class _BadgeChip extends StatelessWidget {
+  const _BadgeChip({required this.emoji});
+  final String emoji;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 26,
+      height: 26,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(color: Colors.black.withAlpha(40), blurRadius: 4),
+        ],
+      ),
+      child: Center(child: Text(emoji, style: const TextStyle(fontSize: 14))),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Interactive room item
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _RoomItem extends StatefulWidget {
   const _RoomItem({
     required this.assetPath,
@@ -337,7 +449,7 @@ class _RoomItem extends StatefulWidget {
   });
 
   final String assetPath;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool isActive;
 
   @override
