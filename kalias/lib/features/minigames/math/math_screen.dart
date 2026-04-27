@@ -150,6 +150,7 @@ class _MathScreenState extends ConsumerState<MathScreen> {
           hunger: 40,
         );
     await ref.read(playerProfileProvider.notifier).addXp(_minigameXp);
+    if (!mounted) return;
 
     await Future.delayed(const Duration(seconds: 2));
     if (mounted) context.go(AppRoutes.reward, extra: _minigameXp);

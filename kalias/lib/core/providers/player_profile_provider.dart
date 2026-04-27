@@ -35,39 +35,44 @@ class PlayerProfileNotifier extends Notifier<PlayerProfile> {
     return profile;
   }
 
-  /// Persist any mutations made directly on [state] fields.
-  Future<void> save() async => state.save();
+  /// Persist any mutations made directly on [state] fields and notify
+  /// Riverpod listeners. Must be called after every field mutation.
+  Future<void> _saveAndNotify() async {
+    await state.save();
+    // PlayerProfile.== always returns false, so this assignment
+    // always triggers a rebuild in every watching widget.
+    // ignore: invalid_use_of_protected_member
+    state = state;
+  }
 
   /// Add XP and persist. Returns number of Purr-gress cycles completed.
   Future<int> addXp(int amount) async {
     final cycles = state.addXp(amount);
-    await save();
+    await _saveAndNotify();
     return cycles;
   }
 
   Future<void> setCharacter(String characterId) async {
     state.characterId = characterId;
-    await save();
+    await _saveAndNotify();
   }
 
   Future<void> setDifficultyTier(DifficultyTier tier) async {
     state.difficultyTier = tier;
-    await save();
+    await _saveAndNotify();
   }
 
   Future<void> setName(String name) async {
     state.name = name;
-    await save();
+    await _saveAndNotify();
   }
 
   /// Award [itemId] to inventory and decrement pending trunks.
-  /// [itemId] may already be owned (duplicates allowed — cosmetic extras are
-  /// kept as a future "gift to friend" mechanic).
   Future<void> openTrunk(String itemId) async {
     state.inventory = [...state.inventory, itemId];
     if (state.pendingTrunks > 0) state.pendingTrunks--;
     state.trunkOpenCount++;
-    await save();
+    await _saveAndNotify();
   }
 
   /// Equip [itemId] to its slot (unequips whatever was there before).
@@ -80,6 +85,6 @@ class PlayerProfileNotifier extends Notifier<PlayerProfile> {
       next[slot] = itemId;
     }
     state.equipped = next;
-    await save();
+    await _saveAndNotify();
   }
 }

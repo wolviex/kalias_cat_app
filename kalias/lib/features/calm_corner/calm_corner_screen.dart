@@ -275,7 +275,7 @@ class _BreathViewState extends State<_BreathView>
   void _inhale() {
     setState(() { _phase = _BreathPhase.inhale; _label = 'Breathe in…'; });
     _ctrl.animateTo(1.0, duration: _inhaleSecs, curve: Curves.easeIn)
-        .then((_) => _hold());
+        .then((_) { if (mounted) _hold(); });
   }
 
   void _hold() {

@@ -88,6 +88,15 @@ class PlayerProfile extends HiveObject {
     return cycles;
   }
 
+  /// Override equality so that Riverpod's Notifier always treats an in-place
+  /// mutation as a state change when `state = state` is called.
+  /// HiveObject storage is not affected by this — Hive tracks objects by key.
+  @override
+  bool operator ==(Object other) => false;
+
+  @override
+  int get hashCode => identityHashCode(this);
+
   factory PlayerProfile.defaults({
     required String id,
     required String name,
