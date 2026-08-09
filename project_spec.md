@@ -83,6 +83,27 @@ Flutter is installed via `/custom-cont-init.d/50-install-flutter.sh` (clones the
 - Asset handoff format: PNG sprite sheets + JSON atlas descriptors (Aseprite or TexturePacker compatible).
 - Audio assets: OGG format for Android compatibility; MP3 fallback for web.
 
+**Decision (2026-07-15):** Character art is rendered as **Flutter `CustomPainter`s** ported
+from the Design_handoff SVGs (`Concept/Design_handoff/characters.jsx`), not from the AI
+placeholder sprite-sheet PNGs (which have labels/checkerboard baked into the pixels and cannot
+be sliced cleanly). Painters live in `lib/shared/widgets/character_painters.dart`, draw in the
+prototype's 200×220 viewBox space (Kalia 200×260), and take the live `MoodState` so faces
+react (grumpy/sad/zoomies eye variants per the handoff). This matches the room props, which
+are already CustomPainters, and removes the dependency on external art deliveries. Golden
+tests (`test/character_painters_golden_test.dart`) render the characters to PNGs for visual
+review. Producer-delivered final art remains a drop-in upgrade path via the same widget seam
+(`PaintedCharacter`).
+
+**Decision (2026-07-16):** Character painters were rebuilt to match the target sprite sheets in
+`/assets` using an organic rendering system instead of geometric primitives: (1) an outline
+hierarchy — primary contours ~4.5, interior features ~2.5–3.5, detail lines ~1.2–1.8, all
+round-capped/joined; (2) whiskers and limbs drawn as tapered filled ribbons (`_taperedQuad`)
+rather than uniform strokes; (3) subtle vertical gradients on major fills for a soft overhead
+light; (4) blurred low-alpha washes for contact shadows (chin, loaf-on-head, ground). Palettes
+were resampled from the targets (Noodles tan/cream — not saturated orange; Loaf golden scalloped
+crust + orange/gray calico ear-patches; Kalia pink long sleeves + bulbous curl silhouette via
+`Path.combine` union; Robot plush-toy blues with inset panel grid + striped maraca).
+
 ---
 
 ## 5. Characters & Educational Pillars

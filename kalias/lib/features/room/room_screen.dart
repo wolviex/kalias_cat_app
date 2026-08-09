@@ -8,12 +8,10 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/models/cat_state.dart';
-import '../../core/models/kalia_sprites.dart';
-import '../../core/models/noodles_sprites.dart';
 import '../../core/providers/cats_provider.dart';
 import '../../core/providers/player_profile_provider.dart';
 import '../../core/router/app_router.dart';
-import '../../shared/widgets/sprite_sheet_animator.dart';
+import '../../shared/widgets/character_painters.dart';
 import 'care_sheet.dart';
 import 'room_painters.dart';
 import 'room_provider.dart';
@@ -121,7 +119,11 @@ class _RoomScreenState extends ConsumerState<RoomScreen>
                 height: h * 0.32,
                 child: Stack(
                   children: [
-                    const CustomPaint(painter: MoodChartPainter()),
+                    // Card + mood faces. Must fill the slot — a bare CustomPaint
+                    // with no child collapses to zero size inside a Stack.
+                    const Positioned.fill(
+                      child: CustomPaint(painter: MoodChartPainter()),
+                    ),
                     // Title text overlay
                     Positioned(
                       top: 6,
@@ -231,9 +233,10 @@ class _RoomScreenState extends ConsumerState<RoomScreen>
                 breatheCtrl: _breatheCtrl,
                 focused: focusedCat == 'noodles',
                 onTap: () => _focus('noodles'),
-                child: _NoodlesSprite(
-                  cat: cats[CatId.noodles]!,
-                  width: w * 0.16,
+                child: PaintedCharacter(
+                  painter: NoodlesPainter(
+                    mood: cats[CatId.noodles]?.moodState ?? MoodState.neutral,
+                  ),
                 ),
               ),
 
@@ -247,11 +250,10 @@ class _RoomScreenState extends ConsumerState<RoomScreen>
                 breatheCtrl: _breatheCtrl,
                 focused: focusedCat == 'loafCat',
                 onTap: () => _focus('loafCat'),
-                child: Image.asset(
-                  CatId.loafCat.assetPath,
-                  width: w * 0.17,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => _PlaceholderChar('🍞'),
+                child: PaintedCharacter(
+                  painter: LoafCatPainter(
+                    mood: cats[CatId.loafCat]?.moodState ?? MoodState.neutral,
+                  ),
                 ),
               ),
 
@@ -275,11 +277,10 @@ class _RoomScreenState extends ConsumerState<RoomScreen>
                 breatheCtrl: _breatheCtrl,
                 focused: focusedCat == 'robotCat',
                 onTap: () => _focus('robotCat'),
-                child: Image.asset(
-                  CatId.robotCat.assetPath,
-                  width: w * 0.15,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => _PlaceholderChar('🤖'),
+                child: PaintedCharacter(
+                  painter: RobotCatPainter(
+                    mood: cats[CatId.robotCat]?.moodState ?? MoodState.neutral,
+                  ),
                 ),
               ),
 
@@ -376,7 +377,7 @@ class _CharacterSlot extends StatelessWidget {
                   child: _NeedsIndicator(needs: needs),
                 ),
 
-              // Sprite with shadow + breathe
+              // Sprite with breathe (ground shadow is painted by the character)
               AnimatedBuilder(
                 animation: breatheCtrl,
                 builder: (_, sprite) => Transform.scale(
@@ -384,18 +385,7 @@ class _CharacterSlot extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: sprite,
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: kInk.withAlpha(focused ? 77 : 36),
-                        blurRadius: focused ? 20 : 8,
-                        offset: Offset(0, focused ? 10 : 3),
-                      ),
-                    ],
-                  ),
-                  child: child,
-                ),
+                child: child,
               ),
             ],
           ),
@@ -448,64 +438,12 @@ class _KaliaSlot extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: child,
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: kInk.withAlpha(focused ? 77 : 36),
-                    blurRadius: focused ? 20 : 8,
-                    offset: Offset(0, focused ? 10 : 3),
-                  ),
-                ],
-              ),
-              child: SpriteSheetAnimator(
-                assetPath: KaliaSprites.assetPath,
-                frames: KaliaSprites.idleWaveCheer,
-                frameDuration: const Duration(milliseconds: 250),
-                fallback: Image.asset(
-                  'assets/characters/Kalia.png',
-                  width: width,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => _PlaceholderChar('🧒'),
-                ),
-              ),
+            child: const PaintedCharacter(
+              painter: KaliaPainter(),
+              aspectRatio: KaliaPainter.aspectRatio,
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-// ── Noodles sprite (mood-animated) ────────────────────────────────────────────
-
-class _NoodlesSprite extends StatelessWidget {
-  const _NoodlesSprite({required this.cat, required this.width});
-  final CatState cat;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    final frames = switch (cat.moodState) {
-      MoodState.zoomies => NoodlesSprites.run,
-      MoodState.happy || MoodState.neutral => NoodlesSprites.standDance,
-      _ => NoodlesSprites.idleSleep,
-    };
-    final fps = switch (cat.moodState) {
-      MoodState.zoomies => const Duration(milliseconds: 120),
-      MoodState.happy || MoodState.neutral =>
-        const Duration(milliseconds: 180),
-      _ => const Duration(milliseconds: 280),
-    };
-    return SpriteSheetAnimator(
-      assetPath: NoodlesSprites.assetPath,
-      frames: frames,
-      frameDuration: fps,
-      fallback: Image.asset(
-        CatId.noodles.assetPath,
-        width: width,
-        fit: BoxFit.contain,
-        errorBuilder: (_, _, _) => _PlaceholderChar('🐈'),
       ),
     );
   }
@@ -946,26 +884,6 @@ class _DustMotePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DustMotePainter old) => old.t != t;
-}
-
-// ── Placeholder ───────────────────────────────────────────────────────────────
-
-class _PlaceholderChar extends StatelessWidget {
-  const _PlaceholderChar(this.emoji);
-  final String emoji;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5ECDE),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Center(
-        child: Text(emoji, style: const TextStyle(fontSize: 28)),
-      ),
-    );
-  }
 }
 
 // ── Dev games menu ────────────────────────────────────────────────────────────

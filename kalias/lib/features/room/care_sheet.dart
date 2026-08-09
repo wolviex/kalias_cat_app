@@ -13,6 +13,7 @@ import '../../core/models/player_profile.dart';
 import '../../core/providers/cats_provider.dart';
 import '../../core/providers/player_profile_provider.dart';
 import '../../core/router/app_router.dart';
+import '../../shared/widgets/character_painters.dart';
 import 'room_painters.dart' show kInk, kBlush, kSage, kLilac, kButter;
 import 'room_provider.dart';
 
@@ -335,7 +336,12 @@ class _SheetPanel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Header row
-                  _Header(info: info, catId: catId, onDismiss: onDismiss),
+                  _Header(
+                    info: info,
+                    catId: catId,
+                    mood: cat?.moodState ?? MoodState.neutral,
+                    onDismiss: onDismiss,
+                  ),
                   const SizedBox(height: 16),
 
                   if (!isKalia && cat != null) ...[
@@ -434,10 +440,16 @@ class _SheetPanel extends StatelessWidget {
 // ── Header ────────────────────────────────────────────────────────────────────
 
 class _Header extends StatelessWidget {
-  const _Header({required this.info, required this.catId, required this.onDismiss});
+  const _Header({
+    required this.info,
+    required this.catId,
+    required this.mood,
+    required this.onDismiss,
+  });
 
   final _Info info;
   final String catId;
+  final MoodState mood;
   final VoidCallback onDismiss;
 
   @override
@@ -445,7 +457,7 @@ class _Header extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Portrait circle
+        // Portrait circle — painted character head, framed by the tinted circle
         Container(
           width: 56,
           height: 56,
@@ -460,18 +472,7 @@ class _Header extends StatelessWidget {
               ),
             ],
           ),
-          child: ClipOval(
-            child: Image.asset(
-              _portraitPath(catId),
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => Center(
-                child: Text(
-                  _fallbackEmoji(catId),
-                  style: const TextStyle(fontSize: 24),
-                ),
-              ),
-            ),
-          ),
+          child: CharacterPortrait(id: catId, mood: mood),
         ),
         const SizedBox(width: 14),
         Expanded(
@@ -531,19 +532,6 @@ class _Header extends StatelessWidget {
     );
   }
 
-  static String _portraitPath(String id) => switch (id) {
-        'noodles' => 'assets/characters/Noodles the Cat.png',
-        'loafCat' => 'assets/characters/Loaf Cat.png',
-        'robotCat' => 'assets/characters/Robot Cat.png',
-        _ => 'assets/characters/Kalia.png',
-      };
-
-  static String _fallbackEmoji(String id) => switch (id) {
-        'noodles' => '🐈',
-        'loafCat' => '🍞',
-        'robotCat' => '🤖',
-        _ => '🧒',
-      };
 }
 
 // ── Stat tile ─────────────────────────────────────────────────────────────────
