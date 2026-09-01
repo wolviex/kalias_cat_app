@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/models/cat_state.dart';
 import '../../core/providers/cats_provider.dart';
@@ -132,7 +131,7 @@ class _RoomScreenState extends ConsumerState<RoomScreen>
                       child: Text(
                         'HOW ARE YOU\nFEELING?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: TextStyle(fontFamily: 'Nunito', 
                           fontSize: 6,
                           fontWeight: FontWeight.w800,
                           color: kLilac,
@@ -594,7 +593,7 @@ class _ChromeLayer extends ConsumerWidget {
               children: [
                 Text(
                   "Kalia's room",
-                  style: GoogleFonts.caveat(
+                  style: TextStyle(fontFamily: 'Caveat', 
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: kInk,
@@ -821,7 +820,7 @@ class _PurrBar extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             '$xp ✦',
-            style: GoogleFonts.caveat(
+            style: TextStyle(fontFamily: 'Caveat', 
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: kInk,
@@ -924,7 +923,7 @@ class _GamesMenu extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             '🎮 Minigames',
-            style: GoogleFonts.caveat(
+            style: TextStyle(fontFamily: 'Caveat', 
                 fontSize: 26, fontWeight: FontWeight.w700, color: kInk),
           ),
           const SizedBox(height: 4),

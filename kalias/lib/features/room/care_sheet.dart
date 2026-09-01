@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/models/cat_state.dart';
 import '../../core/models/difficulty_tier.dart';
@@ -481,7 +480,7 @@ class _Header extends StatelessWidget {
             children: [
               Text(
                 info.name,
-                style: GoogleFonts.caveat(
+                style: TextStyle(fontFamily: 'Caveat', 
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                   color: kInk,
@@ -635,7 +634,7 @@ class _NeedsBanner extends StatelessWidget {
               children: [
                 Text(
                   isHungry ? 'a little hungry' : 'feeling low on spark',
-                  style: GoogleFonts.caveat(
+                  style: TextStyle(fontFamily: 'Caveat', 
                     fontSize: 20,
                     color: kInk,
                     height: 1,
@@ -764,7 +763,7 @@ class _KaliaCard extends ConsumerWidget {
       children: [
         Text(
           "That's you!",
-          style: GoogleFonts.caveat(
+          style: TextStyle(fontFamily: 'Caveat', 
             fontSize: 26,
             color: kInk,
             fontWeight: FontWeight.w700,
@@ -882,7 +881,7 @@ class _ToastPill extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: GoogleFonts.caveat(
+        style: TextStyle(fontFamily: 'Caveat', 
           fontSize: 22,
           fontWeight: FontWeight.w700,
           color: kInk,

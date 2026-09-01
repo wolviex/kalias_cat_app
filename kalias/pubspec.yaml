@@ -31,9 +31,6 @@ dependencies:
   # Utils
   uuid: ^4.5.1
 
-  # Fonts
-  google_fonts: ^6.2.1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,3 +51,13 @@ flutter:
     - assets/audio/sfx/
     - assets/audio/music/
     - assets/data/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito-Italic.ttf
+          style: italic
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/Caveat-Regular.ttf

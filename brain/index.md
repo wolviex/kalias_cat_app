@@ -1,6 +1,6 @@
 # Brain Index
 
-_Auto-generated. Last updated 2026-09-01T02:23:17.829Z._
+_Auto-generated. Last updated 2026-09-01T22:25:36.465Z._
 
 - [child-safety-and-progression-constraints](pages/child-safety-and-progression-constraints.md) — category: decision | tags: [product, safety, progression] | ## Decision
 - [custom-painted-characters](pages/custom-painted-characters.md) — category: decision | tags: [art, architecture, testing] | ## Decision
