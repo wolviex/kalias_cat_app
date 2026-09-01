@@ -2,21 +2,42 @@
 slug: architecture
 title: System architecture
 role: system architecture
-updated: "2026-06-22T00:00:00"
+updated: "2026-09-01T02:22:22"
 ---
+
+# System architecture
 
 ## Overview
 
-<!-- Which layers / modules make up the system, and their responsibilities. -->
-
-## Module graph
+The Flutter app is organized around a room-based child experience, feature screens for care, calming, rewards, and minigames, and shared state/services. Riverpod coordinates state, Hive CE persists player data, and GoRouter defines the navigable flow.
 
 ```mermaid
 graph TD
-  A[placeholder: replace with a real module] --> B[placeholder]
-  B --> C[placeholder]
+  A[Flutter entrypoint] --> B[GoRouter]
+  B --> C[Onboarding]
+  B --> D[Room]
+  D --> E[Care sheet and cat interactions]
+  D --> F[Minigames]
+  D --> G[Calm Corner / Mood Mirror]
+  D --> H[Trunk / Closet / Reward]
+  E --> I[CatsNotifier]
+  F --> J[PlayerProfileNotifier]
+  I --> K[Hive CE]
+  J --> K
+  D --> L[CustomPainter room and characters]
 ```
+
+## Module boundaries
+
+- `core/models`: persisted and derived domain models, including cat state, difficulty, profile, and rewards.
+- `core/providers`: Riverpod notifiers for cats and player profile; `core/services` holds audio integration.
+- `core/router`: route constants and app navigation.
+- `features`: room, onboarding, five learning minigames, rewards, closet, trunk, and Calm Corner experiences.
+- `shared/widgets`: reusable progress, sprite, and CustomPainter character presentation.
 
 ## Constraints
 
-<!-- Hard constraints that shape the architecture: performance, dependencies, deployment form, etc. -->
+- State and persistence follow [[riverpod-hive-player-state-boundary]].
+- Character presentation follows [[custom-painted-characters]].
+- Product behavior must preserve [[child-safety-and-progression-constraints]].
+- Web development behind the remote proxy follows [[development-proxy-base-path]].
