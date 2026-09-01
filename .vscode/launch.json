@@ -18,7 +18,8 @@
             "deviceId": "web-server",
             "toolArgs": [
                 "--web-port=8080",
-                "--web-hostname=0.0.0.0"
+                "--web-hostname=0.0.0.0",
+                "--web-launch-url=https://code-home.manifold.rocks/proxy/8080/"
             ]
         },
         {
@@ -34,7 +35,8 @@
             "flutterMode": "profile",
             "toolArgs": [
                 "--web-port=8080",
-                "--web-hostname=0.0.0.0"
+                "--web-hostname=0.0.0.0",
+                "--web-launch-url=https://code-home.manifold.rocks/proxy/8080/"
             ]
         },
         {

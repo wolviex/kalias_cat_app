@@ -53,10 +53,13 @@ Flutter web is served on a fixed port and accessed via the manifold.rocks revers
 | Setting | Value |
 | :--- | :--- |
 | Flutter web port | `8080` |
-| Accessible URL | `https://8080.code.home.manifold.rocks/` |
+| Accessible URL | `https://code-home.manifold.rocks/proxy/8080/` |
 | Bind address | `0.0.0.0` (required for the proxy to reach it) |
+| Browser base path | `/proxy/8080/` |
 
 These are passed to `flutter run` via `toolArgs` (not `args`) in `.vscode/launch.json`. Using `args` sends them to the Dart app instead of the Flutter tool, causing Flutter to bind to a random port.
+
+The `code-home.manifold.rocks/proxy/<port>/` proxy strips the `/proxy/<port>/` prefix before forwarding requests to Flutter. Because Flutter's dev server treats a literal `<base href="/proxy/8080/">` in `web/index.html` as a server-side base path, `web/index.html` derives `/proxy/<port>/` from `window.location.pathname` and injects the base tag at runtime instead.
 
 ### Debug Session Limitation
 
